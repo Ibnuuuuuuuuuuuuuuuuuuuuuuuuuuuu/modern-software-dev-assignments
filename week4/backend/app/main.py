@@ -32,3 +32,9 @@ async def root() -> FileResponse:
 # Routers
 app.include_router(notes_router.router)
 app.include_router(action_items_router.router)
+
+
+@app.get("/api/spotify/artist/{name}")
+async def get_artist_info(name: str):
+    # Simulasi data (Mock Data) karena kendala API
+    return {"name": name.replace("-", " ").title(), "genre": "R&B", "status": "verified"}

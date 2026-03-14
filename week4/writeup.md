@@ -67,4 +67,8 @@ d. Before vs. after (i.e. manual workflow vs. automated workflow)
 > TODO
 
 e. How you used the automation to enhance the starter application
-> TODO
+- Saya menggunakan panduan CLAUDE.md untuk memastikan setiap penambahan fitur (seperti endpoint Spotify Artist) diawali dengan pembuatan unit test terlebih dahulu (Test-First approach).
+
+- Saya mensimulasikan perintah /qa-check secara manual untuk memverifikasi bahwa endpoint baru tersebut tidak hanya berfungsi secara teknis, tetapi juga memenuhi standar formatting dan linting yang ketat.
+
+- Hasilnya, fitur baru berhasil ditambahkan ke dalam starter application dengan jaminan kualitas tinggi (semua pytest lulus 100%).
