@@ -1,31 +1,37 @@
-from datetime import datetime
+from sqlalchemy import Column, Integer, String, DateTime, ForeignKey, Boolean
+from sqlalchemy.orm import relationship
+from sqlalchemy.sql import func
+from .db import Base
 
-from sqlalchemy import Boolean, Column, DateTime, Integer, String, Text
-from sqlalchemy.orm import declarative_base
+class Category(Base):
+    __tablename__ = "categories"
+    id = Column(Integer, primary_key=True, index=True)
+    name = Column(String, unique=True, index=True)
+    
+    # Relationship ke Note
+    notes = relationship("Note", back_populates="category")
 
-Base = declarative_base()
-
-
-class TimestampMixin:
-    created_at = Column(DateTime, default=datetime.utcnow, nullable=False)
-    updated_at = Column(
-        DateTime, default=datetime.utcnow, onupdate=datetime.utcnow, nullable=False
-    )
-
-
-class Note(Base, TimestampMixin):
+class Note(Base):
     __tablename__ = "notes"
-
     id = Column(Integer, primary_key=True, index=True)
-    title = Column(String(200), nullable=False)
-    content = Column(Text, nullable=False)
+    title = Column(String, index=True)
+    content = Column(String)
+    created_at = Column(DateTime(timezone=True), server_default=func.now())
+    updated_at = Column(DateTime(timezone=True), onupdate=func.now())
+    
+    # ForeignKey ke Category
+    category_id = Column(Integer, ForeignKey("categories.id"), nullable=True)
+    category = relationship("Category", back_populates="notes")
 
-
-class ActionItem(Base, TimestampMixin):
+# INI YANG HILANG: Tambahkan kembali model ActionItem
+class ActionItem(Base):
     __tablename__ = "action_items"
-
     id = Column(Integer, primary_key=True, index=True)
-    description = Column(Text, nullable=False)
-    completed = Column(Boolean, default=False, nullable=False)
-
-
+    content = Column(String)
+    due_date = Column(String, nullable=True)
+    status = Column(String, default="pending") # pending, completed
+    created_at = Column(DateTime(timezone=True), server_default=func.now())
+    priority = Column(String, default="normal")
+    
+    # Opsional: Jika action item mau dihubungkan ke note tertentu
+    note_id = Column(Integer, ForeignKey("notes.id"), nullable=True)

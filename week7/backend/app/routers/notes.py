@@ -39,6 +39,7 @@ def create_note(payload: NoteCreate, db: Session = Depends(get_db)) -> NoteRead:
     note = Note(title=payload.title, content=payload.content)
     db.add(note)
     db.flush()
+    db.commit()
     db.refresh(note)
     return NoteRead.model_validate(note)
 
