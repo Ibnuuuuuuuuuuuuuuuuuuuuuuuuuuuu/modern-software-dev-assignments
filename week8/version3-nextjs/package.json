@@ -1,0 +1,9 @@
+{
+  "name": "developer-control-center-v3",
+  "version": "1.0.0",
+  "description": "Version 3 using Express.js",
+  "main": "server.js",
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}
